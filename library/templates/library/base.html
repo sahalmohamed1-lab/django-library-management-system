@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Library Management{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Library Management System</h1>
+        <nav>
+    <a href="{% url 'home' %}">Home</a>
+
+    {% if user.is_authenticated %}
+        |
+        <a href="{% url 'book_list' %}">Books</a>
+        |
+        <span>Welcome, {{ user.username }}</span>
+
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        |
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+</nav>
+
+<hr>
+    </header>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
